@@ -1,0 +1,31 @@
+{
+    "url": "",
+    "theme": "basic",
+
+    "secret_key": "",
+
+    "googlemapsjs": "https://maps.googleapis.com/maps/api/js?sensor=true&key=",
+    "googlemapsapikey": "",
+
+    "couch": {
+      "host": "",
+      "admin": "",
+      "password": "",
+	  "port": 5984
+    },
+
+    "twitter": {
+      "key": "",
+      "secret": "",
+      "oauth": {
+        "token": "",
+        "secret": ""
+      }
+    },
+
+    "cloudmade": {
+      "key": "",
+      "token": "",
+      "style": ""
+    }
+}

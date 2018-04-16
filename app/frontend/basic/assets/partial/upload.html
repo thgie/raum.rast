@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <link href="/css/lib.min.css" rel="stylesheet">
+  <link href="/css/raum.css" rel="stylesheet">
+
+</head>
+<body class="upload">
+
+  <form action="/upload" class="file-upload-form" method="post" enctype="multipart/form-data" >
+    <input name="photo" type="file" class="file-upload-field"> 
+  </form>
+
+  <button class="btn btn-mini btn-primary file-upload-btn" type="button"><span class="fui-photo"></span><span class="fui-plus"></span></button>
+
+  <script src="/js/lib.min.js"></script>
+  <script>
+
+    var replaced = false;
+
+    $('.file-upload-btn').click(function(){
+      $('.file-upload-btn').attr('disabled', 'disabled');
+      $('.file-upload-field').trigger('click');
+    });
+
+    $('.file-upload-field').change(function(){
+      if($('.file-upload-field').val().indexOf('.jpg') > -1){
+        parent.raum.ui.thumb.temp();
+        parent.raum.ui.message.show('Upload gestartet.');
+        $('.file-upload-form').submit();
+      } else {
+        $('.file-upload-btn').removeAttr('disabled');
+        parent.raum.ui.message.show('Nur JPG erlaubt.');
+      }
+    });
+
+  </script>
+  
+</body>
+</html>

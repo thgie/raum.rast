@@ -1,0 +1,23 @@
+{
+  "description": "tba",
+  "version": "0.1.0-47",
+  "private": true,
+  "dependencies": {
+    "socket.io": "0.9.x",
+    "formidable": "1.0.x",
+    "flickr-with-uploads": "0.2.x"
+  },
+  "name": "raum",
+  "author": "Adrian Demleitner",
+  "homepage": "http://raum.rast.be",
+  "subdomain": "raum",
+  "scripts": {
+    "start": "app.js"
+  },
+  "engines": {
+    "node": "0.8.x"
+  },
+  "domains": [
+    "raum.rast.be"
+  ]
+}

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>raum</title>
+
+    <link href="/css/lib.min.css" rel="stylesheet">
+    <link href="/css/leaflet.css" rel="stylesheet">
+    <link href="/css/raum.css" rel="stylesheet">
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-41153927-1', 'rast.be');
+        ga('send', 'pageview');
+    </script>
+
+</head>
+<body>
+
+    <div class="dialog message">
+        <span></span>&nbsp;&nbsp;<a href="#" class="close-btn"><i class="fui-cross-inverted"></i></a>
+    </div>
+
+    <div class="logo">
+        <img src="/img/logo.png" alt="Logo">
+    </div>
+
+    <div class="map"></div>
+
+    <div class="dialog dialog-top">
+        <div class="map-options">
+            <a href="#" class="toggle-map-size fui-plus-inverted"></a>
+        </div>
+        <div class="user-form">
+            <form class="control-group small">
+                <input type="text" placeholder="Benutzername" class="email flat" />
+                <input type="password" placeholder="Passwort" class="password flat" />
+                <button class="login btn btn-primary btn-wide btn-small">Login</button>
+                <button class="register btn btn-danger btn-wide btn-small">Registrieren</button>
+            </form>
+        </div>
+        <div class="options-menu">
+            <!--<button class="list-view btn btn-wide btn-small"><i class="fui-list"></i>Listenansicht</button>-->
+            <button class="new-raum-btn btn btn-primary btn-wide btn-small"><i class="fui-plus"></i>Leerraum erfassen</button>
+            <button class="new-raum-cancel btn btn-danger btn-wide btn-small"><i class="fui-cross"></i>Erfassung abbrechen</button>
+            <button class="logout btn btn-danger btn-wide btn-small"><i class="fui-user"></i>Logout</button>
+        </div>
+    </div>
+
+    <div class="bottom-content container-fluid">
+        <h2>raum.rast</h2>
+        <h5 class="raeume-count"><span>RAEUME-COUNT</span> Freiräume in deiner Stadt</h5>
+        <p>Wir Stadtbewohnenden bewegen uns durch unseren Lebensraum, die Stadt, und stossen dabei immer wieder auf Leerstände. Hier greift raum.RAST. Mit einem Smartphone kann der Leerraum gleich an Ort und Stelle erfasst werden. Oder man schiesst ein Foto und erfasst den Leeraum später mit dem Computer zuhause. raum.RAST soll minimal und funktional sein. Keine Bürokratie, keine langen Formulare, kein neues Social Profile. Leerstände erfassen, suchen und finden – das ist alles.</p>
+        <p>Übrigends – solltest du Unterstützung in der Realisation einer Zwischennutzung brauchen, darfst du uns gerne anfragen. Schreibe einfach an <a href="mailto:info@rast.be">info@rast.be</a>. Weitere Infos zu RAST bekommst du auf <a href="http://rast.be">rast.be</a>.</p>
+    </div>
+
+    <div class="footer bottom-menu bottom-menu-large bottom-menu-inverse">
+        <div class="container">
+            <div class="row">
+                <div class="span2">
+                    <img src="/img/logo.png" alt="Logo Footer" class="footer-logo">
+                </div>
+                <div class="span4">
+                    <h5 class="title">RAST</h5>
+                    <p class="small">Rast ist ein Kit, ein Baukasten, ein Experiment. Jedem Raum eine eigene Strategie. Rast lässt sich auf Umgebung und Ideen ein, Rast veranstaltet oder stellt aus, Rast collagiert und konstruiert – immer wieder aufs Neue. Rastlos im Realen, im Virtuellen dafür hat Rast ein festes Heim.</p>
+                    <ul class="bottom-links">
+                        <li><a href="http://rast.be">Homepage</a></li>
+                        <li><a href="https://www.facebook.com/rast.kulturmenagerie">Facebook</a></li>
+                        <li><a href="https://twitter.com/RASTmenagerie">Twitter</a></li>
+                    </ul>
+                </div>
+                <div class="span4">
+                    <h5 class="title">raum</h5>
+                    <p class="small">Der Sourcecode ist unter GPL veröffentlicht. Im Backend arbeitet node.js. Die CouchDB Datenbank kommt von Iriscouch und die Fotos werden auf Flickr gehostet.</p>
+                    <ul class="bottom-links">
+                        <li><a href="https://github.com/thgie/raum">Github</a></li>
+                        <li><a href="http://thgie.ch">Entwickler</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="infobox-wrapper">
+        <div id="infobox" class="popover top">
+            <div class="arrow"></div>
+            <h3 class="popover-title"></h3>
+            <div class="popover-content"></div>
+        </div>
+    </div>
+
+    <div class="info-modal modal hide" tabindex="-1" role="dialog"
+        aria-labelledby="info-modal-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="info-modal-label"></h4>
+        </div>
+        <div class="info-modal-body modal-body"></div>
+        <div class="modal-footer">
+            <button class="btn btn-mini" data-dismiss="modal" aria-hidden="true">Schliessen</button>
+        </div>
+    </div>
+
+    <div class="comment-modal modal hide" tabindex="-1" role="dialog"
+        aria-labelledby="info-modal-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4>Kommentar</h4>
+        </div>
+        <div class="modal-body">
+            <div class="comment-process">
+                <div class="comment-step-one">
+                    <div class="control-group small">
+                        <input type="hidden" class="comment-for">
+                        <textarea class="comment-field"></textarea>
+                    </div>
+                </div>
+                <div class="comment-step-two">
+                    <p>Vielen herzlichen Dank für deinen Kommentar.</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-mini btn-danger" data-dismiss="modal" aria-hidden="true">Abbrechen</button>
+            <button class="btn btn-mini btn-primary comment-btn">Kommentieren</button>
+            <button class="btn btn-mini close-btn" data-dismiss="modal" aria-hidden="true">Schliessen</button>
+        </div>
+    </div>
+
+    <div class="new-raum-modal modal hide" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4>Raum erfassen</h4>
+        </div>
+        <div class="new-raum-process modal-body">
+            <div class="new-raum-step-one">
+                <p>Befindest du dich gerade vor Ort? Wenn du Ja drückst wirst du gleich gefragt ob du deine Position preisgeben möchtest. Wir versprechen dir diese nur zum Finden der Adresse zu benutzen.</p>
+                <button class="new-raum-onsite-yes btn btn-primary btn-mini btn-block">Ja</button>
+                <button class="new-raum-onsite-no btn btn-danger btn-mini btn-block">Nein</button>
+            </div>
+            <div class="new-raum-step-two">
+                <p>Hier kannst du nach der Adresse suchen.</p>
+                <div class="input-append">
+                    <input class="address-search" type="text" placeholder="Adresse suchen">
+                    <button class="btn address-search-btn" type="button"><span class="fui-search"></span></button>
+                </div>
+            </div>
+            <div class="new-raum-step-three">
+                <div class="control-group small">
+                    <label>Fotos</label>
+                    <iframe src="/partial/upload" frameborder="0" id="file-upload"></iframe>
+                    <div class="thumbs"></div>
+                    <label>Adresse</label>
+                    <input class="address" type="text" placeholder="Adresse" />
+                    <input type="hidden" class="temp_lat">
+                    <input type="hidden" class="temp_lng">
+                    <label>Kontaktinformationen</label>
+                    <textarea class="contact"></textarea>
+                    <div class="fifty">
+                        <label>Seit wann frei?</label>
+                        <input type="text" class="datepicker from">
+                    </div>
+                    <div class="fifty">
+                        <label>Und bis wann?</label>
+                        <input type="text" class="datepicker until">
+                    </div>
+                    <label>Sonstiges</label>
+                    <textarea class="comment"></textarea>
+                </div>
+            </div>
+            <div class="new-raum-step-four">
+                <p>Vielen herzlichen Dank für deine Mühen. Ein Raum mehr für die Freiheit!</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-mini btn-danger" data-dismiss="modal" aria-hidden="true">Abbrechen</button>
+            <button class="btn btn-mini btn-primary add-raum" disabled="disabled">Speichern</button>
+            <button class="btn btn-mini modal-close-btn" data-dismiss="modal" aria-hidden="true">Schliessen</button>
+        </div>
+    </div>
+
+    <script>LOC - BOOTSTRAP</script>
+    <script>CM - BOOTSTRAP</script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="GOOGLE-MAPS"></script>
+    <script src="/js/lib.min.js"></script>
+    <script src="/js/raum.lib.js"></script>
+    <script src="/js/raum.ui.js"></script>
+    <script src="/js/raum.main.js"></script>
+
+</body>
+</html>
